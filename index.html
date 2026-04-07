@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌊 2026 Seoul Summer Outing – Program Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: #f0f6ff;
+      color: #2d3748;
+      min-height: 100vh;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 40%, #1976d2 70%, #42a5f5 100%);
+      color: #fff;
+      padding: 48px 40px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      background: rgba(255,255,255,.06);
+      border-radius: 50%;
+      top: -100px; right: -80px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 260px; height: 260px;
+      background: rgba(255,255,255,.05);
+      border-radius: 50%;
+      bottom: -60px; left: 60px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: .8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .hero h1 span { color: #90caf9; }
+    .hero-sub {
+      font-size: 1rem;
+      opacity: .85;
+      margin-bottom: 28px;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .hero-meta-item { }
+    .hero-meta-item .meta-label {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      opacity: .7;
+      margin-bottom: 3px;
+    }
+    .hero-meta-item .meta-value {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .meta-sep {
+      width: 1px;
+      background: rgba(255,255,255,.25);
+      align-self: stretch;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: #fff;
+      color: #1565c0;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .3px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+      transition: transform .15s, box-shadow .15s;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+    }
+    @media(max-width: 760px) {
+      .hero { padding: 32px 20px 40px; }
+      .hero h1 { font-size: 1.9rem; }
+      .hero-cta { display: block; text-align: center; padding: 16px 24px; font-size: 1rem; }
+      .hero-meta { gap: 16px; }
+      .meta-sep { display: none; }
+    }
+
+    /* ── LAYOUT ── */
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    @media(max-width: 760px) {
+      .page-body { grid-template-columns: 1fr; }
+    }
+
+    /* ── SECTION HEADING ── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0d47a1;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e3f2fd;
+    }
+
+    /* ── TIMETABLE ── */
+    .timetable-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      position: sticky;
+      top: 20px;
+    }
+
+    .timeline { position: relative; padding-left: 0; }
+
+    .tl-item {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* left column: time */
+    .tl-time-col {
+      width: 80px;
+      flex-shrink: 0;
+      padding: 14px 10px 14px 0;
+      text-align: right;
+    }
+    .tl-time {
+      font-size: .72rem;
+      font-weight: 700;
+      color: #90a4ae;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    /* center: dot + line */
+    .tl-spine {
+      width: 28px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tl-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2.5px solid #1565c0;
+      background: #fff;
+      flex-shrink: 0;
+      margin-top: 16px;
+      z-index: 1;
+      transition: background .2s;
+    }
+    .tl-dot.active { background: #1565c0; }
+    .tl-line {
+      width: 2px;
+      flex: 1;
+      background: #e3f2fd;
+      min-height: 20px;
+    }
+    .tl-item:last-child .tl-line { display: none; }
+
+    /* right: content */
+    .tl-content {
+      flex: 1;
+      padding: 10px 0 18px 10px;
+    }
+    .tl-label {
+      font-size: .82rem;
+      font-weight: 800;
+      color: #1565c0;
+      margin-bottom: 2px;
+    }
+    .tl-desc {
+      font-size: .78rem;
+      color: #888;
+      line-height: 1.4;
+    }
+    .tl-chip {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: .68rem;
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    /* ── RIGHT COLUMN ── */
+    .right-col { display: flex; flex-direction: column; gap: 24px; }
+
+    /* ── ACTIVITY CARDS ── */
+    .activity-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.13);
+    }
+    .activity-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .activity-img-placeholder {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      gap: 8px;
+    }
+    .activity-img-placeholder .ph-label {
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .activity-body { padding: 20px 22px 22px; }
+    .activity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .activity-body h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #1a237e;
+    }
+    .activity-body p {
+      font-size: .88rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .activity-tip {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      background: #f8f9ff;
+      border-left: 3px solid #90caf9;
+      border-radius: 0 8px 8px 0;
+      padding: 8px 12px;
+      font-size: .8rem;
+      color: #455a64;
+    }
+    .activity-tip .tip-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── 3-COL ACTIVITY GRID ── */
+    .three-grid {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    }
+    .three-grid-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media(max-width: 560px) {
+      .three-grid-inner { grid-template-columns: 1fr; }
+    }
+    .mini-card {
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+    .mini-card-img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+    }
+    .mini-card-ph {
+      width: 100%;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .mini-card-label {
+      font-size: .78rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 8px 6px;
+      background: #f5f7ff;
+      color: #1565c0;
+    }
+
+    /* ── WHAT TO BRING ── */
+    .bring-card {
+      background: linear-gradient(135deg, #e3f2fd, #fff8e1);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    }
+    .bring-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .bring-item {
+      background: rgba(255,255,255,.7);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+      font-size: .82rem;
+      font-weight: 600;
+      color: #37474f;
+      backdrop-filter: blur(4px);
+    }
+    .bring-item .bi-icon { font-size: 1.5rem; margin-bottom: 4px; }
+
+    /* FOOTER NOTE */
+    .footer-note {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 20px;
+      font-size: .82rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-tag">Seoul Team Outing 2026</div>
+  <h1>☀️ Summer Outing<br><span>Program Guide</span></h1>
+  <p class="hero-sub">서울 오피스 전체가 함께하는 특별한 하루! 🌊🍖🤝</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="meta-label">Event</div>
+      <div class="meta-value">Seoul Team Outing</div>
+    </div>
+    <div class="meta-sep"></div>
+    <div class="hero-meta-item">
+      <div class="meta-label">Location</div>
+      <div class="meta-value">더드림핑, 남양주</div>
+    </div>
+    <div class="meta-sep"></div>
+    <div class="hero-meta-item">
+      <div class="meta-label">Schedule</div>
+      <div class="meta-value">2026년 5월 15일 (금) 오후</div>
+    </div>
+  </div>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDn_FpcSvSPMRbnG48eXv2pKUOFuEuySRnJ75r5pXwLsKNSw/viewform?usp=header"
+     target="_blank"
+     class="hero-cta">
+    ✍️ 지금 바로 참석 신청하기 →
+  </a>
+</div>
+
+<!-- ── BODY ── -->
+<div class="page-body">
+
+  <!-- LEFT: TIMETABLE -->
+  <div class="timetable-card">
+    <div class="section-heading">📋 타임테이블</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">09:00<br>–12:00</div></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">💼 Wrap-up & Lunch</div>
+          <div class="tl-desc">일 열심히 하고 점심 먹자! 🍱</div>
+          <span class="tl-chip" style="background:#e8eaf6;color:#3949ab;">업무</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">12:30<br>–14:00</div></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">🚌 이동</div>
+          <div class="tl-desc">Departure from Centerfield</div>
+          <span class="tl-chip" style="background:#fff8e1;color:#f57f17;">이동</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">14:00<br>–16:00</div></div>
+        <div class="tl-spine"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">🤝 Team Building</div>
+          <div class="tl-desc">800평 메인 잔디밭 레크레이션</div>
+          <span class="tl-chip" style="background:#e8f5e9;color:#2e7d32;">프로그램 A</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">16:00<br>–17:30</div></div>
+        <div class="tl-spine"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">💦 Water Activities</div>
+          <div class="tl-desc">제트보트 투어 & 카페 자유 시간</div>
+          <span class="tl-chip" style="background:#e0f7fa;color:#006064;">프로그램 B</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">17:30<br>–19:30</div></div>
+        <div class="tl-spine"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">🍖 BBQ Dinner</div>
+          <div class="tl-desc">Outdoor BBQ Party at Dreamgol</div>
+          <span class="tl-chip" style="background:#fff3e0;color:#e65100;">프로그램 C</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">18:30<br>–19:30</div></div>
+        <div class="tl-spine"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">🔥 Evening Event</div>
+          <div class="tl-desc">캠프파이어 & 럭키 드로우</div>
+          <span class="tl-chip" style="background:#fce4ec;color:#880e4f;">스페셜</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time-col"><div class="tl-time">19:30<br>–21:00</div></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-label">🚌 귀가</div>
+          <div class="tl-desc">Return to Centerfield</div>
+          <span class="tl-chip" style="background:#f5f5f5;color:#757575;">이동</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT COL -->
+  <div class="right-col">
+
+    <!-- Activity A -->
+    <div class="activity-card">
+      <div class="activity-body">
+        <div class="activity-badge" style="background:#e8f5e9;color:#2e7d32;">
+          🅐 14:00 – 16:00 · Team Building
+        </div>
+        <h3>Team Building: Engagement</h3>
+        <p>잔디밭에서 인터랙티브 게임으로 팀 시너지를 높여요. 소속감과 유대감을 높이는 다양한 레크레이션 활동이 준비되어 있습니다!</p>
+        <div class="activity-tip">
+          <span class="tip-icon">💡</span>
+          <span><strong>Tip:</strong> 야외 활동이니 편한 복장과 운동화를 꼭 챙겨오세요!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity B -->
+    <div class="activity-card">
+      <div class="activity-body">
+        <div class="activity-badge" style="background:#e0f7fa;color:#006064;">
+          🅑 16:00 – 17:30 · Water Activities
+        </div>
+        <h3>Boat Water Activities: Refresh!</h3>
+        <p>북한강의 멋진 뷰와 함께하는 제트보트 & 다양한 투어! 시원한 강바람을 맞으며 더위를 날려버리세요. 난 물멍이 좋다하면, 카페에서 자유 시간도 주어집니다 ☕</p>
+        <div class="activity-tip">
+          <span class="tip-icon">💡</span>
+          <span><strong>Tip:</strong> 제트보트의 경우, 물에 살짝 젖을 수 있어요! 카약은 상관 무!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity C -->
+    <div class="activity-card">
+      <div class="activity-body">
+        <div class="activity-badge" style="background:#fff3e0;color:#e65100;">
+          🅒 17:30 – 19:30 · BBQ Dinner + Evening Event
+        </div>
+        <h3>BBQ Dinner: Connect</h3>
+        <p>드림골에서 즐기는 프리미엄 BBQ! 맛있는 삼겹살과 닭도리탕으로 배불리 먹고, 저녁엔 캠프파이어에 마시멜로 구우며 럭키 드로우까지 🔥 완벽한 여름밤을 함께해요.</p>
+        <div class="activity-tip">
+          <span class="tip-icon">💡</span>
+          <span><strong>Tip:</strong> 6~8인 착석 기준으로 운영됩니다. 팀별 자리가 배정될 예정이에요!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Grid -->
+    <div class="three-grid">
+      <div class="section-heading">📸 현장 미리보기</div>
+      <div class="three-grid-inner">
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work002.jpg" alt="Main Lawn & Seminar" onerror="this.style.display='none';">
+          <div class="mini-card-label">🤝 Team Building</div>
+        </div>
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work006.jpg" alt="Dynamic Boat Tour" onerror="this.style.display='none';">
+          <div class="mini-card-label">⛵ Boat Tour</div>
+        </div>
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/00_images/main_bbqset.jpg" alt="Premium BBQ Set" onerror="this.style.display='none';">
+          <div class="mini-card-label">🍖 BBQ Dinner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What to Bring -->
+    <div class="bring-card">
+      <div class="section-heading">🎒 챙겨오면 좋아요!</div>
+      <div class="bring-grid">
+        <div class="bring-item"><div class="bi-icon">👟</div>편한 운동화</div>
+        <div class="bring-item"><div class="bi-icon">🧥</div>바람막이</div>
+        <div class="bring-item"><div class="bi-icon">🕶️</div>선글라스</div>
+        <div class="bring-item"><div class="bi-icon">🧢</div>모자</div>
+      </div>
+    </div>
+
+  </div><!-- /right-col -->
+
+  <div class="footer-note">
+    🌊 2026 Seoul Office Summer Outing · The Dreamping, 남양주 · 5월 15일(금) 오후<br>
+    문의: Hyeyeon Son | <a href="mailto:hyeyeon.son@moloco.com" style="color:#90caf9;">hyeyeon.son@moloco.com</a>
+  </div>
+
+</div><!-- /page-body -->
+
+</body>
+</html>
