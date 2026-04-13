@@ -366,6 +366,52 @@
     }
     .bring-item .bi-icon { font-size: 1.5rem; margin-bottom: 4px; }
 
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.82);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 16px;
+      box-shadow: 0 12px 60px rgba(0,0,0,.5);
+      object-fit: contain;
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+      opacity: .8;
+      transition: opacity .15s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      background: rgba(0,0,0,.45);
+      padding: 6px 18px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .mini-card-img { cursor: zoom-in; }
+
     /* FOOTER NOTE */
     .footer-note {
       grid-column: 1 / -1;
@@ -425,7 +471,7 @@
       </div>
 
       <div class="tl-item">
-        <div class="tl-time-col"><div class="tl-time">12:30<br>–14:00</div></div>
+        <div class="tl-time-col"><div class="tl-time">12:30<br>–13:30</div></div>
         <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
         <div class="tl-content">
           <div class="tl-label">🚌 이동</div>
@@ -540,15 +586,15 @@
       <div class="section-heading">📸 현장 미리보기</div>
       <div class="three-grid-inner">
         <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work002.jpg" alt="Main Lawn & Seminar" onerror="this.style.display='none';">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work002.jpg" alt="Main Lawn & Seminar" onerror="this.style.display='none';" onclick="openLightbox(this, '🤝 Team Building')">
           <div class="mini-card-label">🤝 Team Building</div>
         </div>
         <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work006.jpg" alt="Dynamic Boat Tour" onerror="this.style.display='none';">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work006.jpg" alt="Dynamic Boat Tour" onerror="this.style.display='none';" onclick="openLightbox(this, '⛵ Boat Tour')">
           <div class="mini-card-label">⛵ Boat Tour</div>
         </div>
         <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/00_images/main_bbqset.jpg" alt="Premium BBQ Set" onerror="this.style.display='none';">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/00_images/main_bbqset.jpg" alt="Premium BBQ Set" onerror="this.style.display='none';" onclick="openLightbox(this, '🍖 BBQ Dinner')">
           <div class="mini-card-label">🍖 BBQ Dinner</div>
         </div>
       </div>
@@ -574,5 +620,26 @@
 
 </div><!-- /page-body -->
 
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  function openLightbox(img, caption) {
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-img').alt = img.alt;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
 </body>
 </html>
