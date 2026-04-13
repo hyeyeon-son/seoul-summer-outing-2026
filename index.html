@@ -21,6 +21,16 @@
       padding: 48px 40px 56px;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .hero-top {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 32px;
     }
     .hero::before {
       content: '';
@@ -37,6 +47,23 @@
       background: rgba(255,255,255,.05);
       border-radius: 50%;
       bottom: -60px; left: 60px;
+    }
+    .hero-content {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-poster {
+      flex-shrink: 0;
+      width: 200px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-poster img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.35);
+      display: block;
     }
     .hero-tag {
       display: inline-block;
@@ -84,12 +111,18 @@
       background: rgba(255,255,255,.25);
       align-self: stretch;
     }
+    .hero-cta-wrap {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
     .hero-cta {
       display: inline-block;
       background: #fff;
       color: #1565c0;
       text-decoration: none;
-      padding: 14px 36px;
+      padding: 14px 48px;
       border-radius: 50px;
       font-size: 1rem;
       font-weight: 800;
@@ -98,17 +131,19 @@
       transition: transform .15s, box-shadow .15s;
       position: relative;
       z-index: 1;
+      text-align: center;
     }
     .hero-cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(0,0,0,.25);
     }
     @media(max-width: 760px) {
-      .hero { padding: 32px 20px 40px; }
+      .hero { padding: 32px 20px 40px; flex-direction: column; }
       .hero h1 { font-size: 1.9rem; }
       .hero-cta { display: block; text-align: center; padding: 16px 24px; font-size: 1rem; }
       .hero-meta { gap: 16px; }
       .meta-sep { display: none; }
+      .hero-poster { width: 140px; align-self: center; }
     }
 
     /* ── LAYOUT ── */
@@ -366,6 +401,83 @@
     }
     .bring-item .bi-icon { font-size: 1.5rem; margin-bottom: 4px; }
 
+    /* ── INVITE MODAL ── */
+    .invite-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      animation: fadeIn .35s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .invite-modal {
+      position: relative;
+      max-width: 380px;
+      width: 90vw;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      animation: slideUp .4s cubic-bezier(.22,.68,0,1.2);
+    }
+    @keyframes slideUp { from { transform: translateY(40px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+    .invite-modal img {
+      width: 100%;
+      display: block;
+    }
+    .invite-modal-footer {
+      background: #fff;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .invite-accept-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .2px;
+      box-shadow: 0 4px 18px rgba(21,101,192,.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .invite-accept-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,101,192,.45); }
+    .invite-skip {
+      font-size: .8rem;
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .invite-skip:hover { color: #666; }
+    .invite-close {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-size: 1.4rem;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+      opacity: .85;
+      background: rgba(0,0,0,.3);
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .15s;
+    }
+    .invite-close:hover { opacity: 1; }
+
     /* ── LIGHTBOX ── */
     .lightbox-overlay {
       display: none;
@@ -426,30 +538,39 @@
 
 <!-- ── HERO ── -->
 <div class="hero">
-  <div class="hero-tag">Seoul Team Outing 2026</div>
-  <h1>☀️ Seoul Summer Club<br><span>Program Guide</span></h1>
-  <p class="hero-sub">서울 오피스 전체가 함께하는 특별한 하루! 🌊🍖🤝</p>
-  <div class="hero-meta">
-    <div class="hero-meta-item">
-      <div class="meta-label">Event</div>
-      <div class="meta-value">Seoul Team Outing</div>
+  <div class="hero-top">
+    <div class="hero-content">
+      <div class="hero-tag">Seoul Team Outing 2026</div>
+      <h1>☀️ Summer Outing<br><span>Program Guide</span></h1>
+      <p class="hero-sub">서울 오피스 전체가 함께하는 특별한 하루! 🌊🍖🤝</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="meta-label">Event</div>
+          <div class="meta-value">Seoul Team Outing</div>
+        </div>
+        <div class="meta-sep"></div>
+        <div class="hero-meta-item">
+          <div class="meta-label">Location</div>
+          <div class="meta-value">더드림핑, 남양주</div>
+        </div>
+        <div class="meta-sep"></div>
+        <div class="hero-meta-item">
+          <div class="meta-label">Schedule</div>
+          <div class="meta-value">2026년 5월 15일 (금) 오후</div>
+        </div>
+      </div>
     </div>
-    <div class="meta-sep"></div>
-    <div class="hero-meta-item">
-      <div class="meta-label">Location</div>
-      <div class="meta-value">더드림핑, 남양주</div>
-    </div>
-    <div class="meta-sep"></div>
-    <div class="hero-meta-item">
-      <div class="meta-label">Schedule</div>
-      <div class="meta-value">2026년 5월 15일 (금) 오후</div>
+    <div class="hero-poster">
+      <img src="./poster.jpg" alt="Moloco Summer Club 2026 Poster">
     </div>
   </div>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDn_FpcSvSPMRbnG48eXv2pKUOFuEuySRnJ75r5pXwLsKNSw/viewform?usp=header"
-     target="_blank"
-     class="hero-cta">
-    ✍️ 지금 바로 참석 신청하기 →
-  </a>
+  <div class="hero-cta-wrap">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDn_FpcSvSPMRbnG48eXv2pKUOFuEuySRnJ75r5pXwLsKNSw/viewform?usp=header"
+       target="_blank"
+       class="hero-cta">
+      💌 초대 수락하기 →
+    </a>
+  </div>
 </div>
 
 <!-- ── BODY ── -->
@@ -536,6 +657,25 @@
   <!-- RIGHT COL -->
   <div class="right-col">
 
+    <!-- Photo Grid -->
+    <div class="three-grid">
+      <div class="section-heading">📸 현장 미리보기</div>
+      <div class="three-grid-inner">
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work002.jpg" alt="Main Lawn & Seminar" onerror="this.style.display='none';" onclick="openLightbox(this, '🤝 Team Building')">
+          <div class="mini-card-label">🤝 Team Building</div>
+        </div>
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work006.jpg" alt="Dynamic Boat Tour" onerror="this.style.display='none';" onclick="openLightbox(this, '⛵ Boat Tour')">
+          <div class="mini-card-label">⛵ Boat Tour</div>
+        </div>
+        <div class="mini-card">
+          <img class="mini-card-img" src="https://thedreamping.com/dreamping/00_images/main_bbqset.jpg" alt="Premium BBQ Set" onerror="this.style.display='none';" onclick="openLightbox(this, '🍖 BBQ Dinner')">
+          <div class="mini-card-label">🍖 BBQ Dinner</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Activity A -->
     <div class="activity-card">
       <div class="activity-body">
@@ -573,29 +713,10 @@
           🅒 17:30 – 19:30 · BBQ Dinner + Evening Event
         </div>
         <h3>BBQ Dinner: Connect</h3>
-        <p>드림골에서 즐기는 프리미엄 BBQ! 맛있는 삼겹살과 닭도리탕으로 배불리 먹으며 🔥 완벽한 여름밤을 함께해요.</p>
+        <p>드림골에서 즐기는 프리미엄 BBQ! 맛있는 삼겹살과 닭도리탕으로 배불리 먹고, 저녁엔 캠프파이어에 마시멜로 구우며 럭키 드로우까지 🔥 완벽한 여름밤을 함께해요.</p>
         <div class="activity-tip">
           <span class="tip-icon">💡</span>
-          <span><strong>Tip:</strong> 캠프파이어에 마시멜로 구우며 럭키 드로우까지 🔥 !</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Photo Grid -->
-    <div class="three-grid">
-      <div class="section-heading">📸 현장 미리보기</div>
-      <div class="three-grid-inner">
-        <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work002.jpg" alt="Main Lawn & Seminar" onerror="this.style.display='none';" onclick="openLightbox(this, '🤝 Team Building')">
-          <div class="mini-card-label">🤝 Team Building</div>
-        </div>
-        <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/73.workshop/work006.jpg" alt="Dynamic Boat Tour" onerror="this.style.display='none';" onclick="openLightbox(this, '⛵ Boat Tour')">
-          <div class="mini-card-label">⛵ Boat Tour</div>
-        </div>
-        <div class="mini-card">
-          <img class="mini-card-img" src="https://thedreamping.com/dreamping/00_images/main_bbqset.jpg" alt="Premium BBQ Set" onerror="this.style.display='none';" onclick="openLightbox(this, '🍖 BBQ Dinner')">
-          <div class="mini-card-label">🍖 BBQ Dinner</div>
+          <span><strong>Tip:</strong> 6~8인 착석 기준으로 운영됩니다. 팀별 자리가 배정될 예정이에요!</span>
         </div>
       </div>
     </div>
@@ -620,6 +741,20 @@
 
 </div><!-- /page-body -->
 
+<!-- ── INVITE MODAL ── -->
+<div class="invite-overlay" id="inviteOverlay">
+  <div class="invite-modal">
+    <span class="invite-close" onclick="closeInvite()">✕</span>
+    <img src="./poster.jpg" alt="Moloco Summer Club 2026 Poster">
+    <div class="invite-modal-footer">
+      <button class="invite-accept-btn" onclick="closeInviteAndScroll()">
+        🎉 프로그램 자세히 보기 →
+      </button>
+      <button class="invite-skip" onclick="closeInvite()">나중에 볼게요</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── LIGHTBOX ── -->
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
@@ -628,6 +763,20 @@
 </div>
 
 <script>
+  function closeInvite() {
+    document.getElementById('inviteOverlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function closeInviteAndScroll() {
+    closeInvite();
+    document.querySelector('.page-body').scrollIntoView({ behavior: 'smooth' });
+  }
+  document.getElementById('inviteOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeInvite();
+  });
+  // Show modal on load
+  document.body.style.overflow = 'hidden';
+
   function openLightbox(img, caption) {
     document.getElementById('lightbox-img').src = img.src;
     document.getElementById('lightbox-img').alt = img.alt;
